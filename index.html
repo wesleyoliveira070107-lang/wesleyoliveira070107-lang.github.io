@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sem Dívida, Sem Culpa — Planilha Financeira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0F1A20;
+    --teal: #163542;
+    --paper: #F1E8D6;
+    --paper-dim: #E7DCC4;
+    --brass: #B4903F;
+    --rust: #7C3428;
+    --text-dark: #1C1712;
+    --text-light: #F1E8D6;
+    --line: rgba(180,144,63,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--ink);
+    color: var(--text-light);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+  .wrap{max-width: 960px; margin: 0 auto; padding: 0 24px;}
+  section{padding: 88px 0;}
+  @media (max-width:640px){ section{padding: 56px 0;} }
+
+  /* ---------- HERO / BOARDING PASS ---------- */
+  .hero{padding-top: 64px; padding-bottom: 40px;}
+  .pass{
+    position: relative;
+    background: var(--paper);
+    color: var(--text-dark);
+    border-radius: 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    overflow: hidden;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.55);
+  }
+  .pass::before, .pass::after{
+    content:"";
+    position:absolute;
+    width: 34px; height: 34px;
+    background: var(--ink);
+    border-radius: 50%;
+    top: 50%; transform: translateY(-50%);
+  }
+  .pass::before{ left: calc(72% - 17px); }
+  .pass::after{ left: calc(72% - 17px); }
+  .pass-main{padding: 48px 40px; position:relative;}
+  .pass-stub{
+    background: var(--teal);
+    color: var(--text-light);
+    padding: 48px 28px;
+    width: 220px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    border-left: 2px dashed var(--brass);
+    position: relative;
+  }
+  .perf{
+    position:absolute; top:0; bottom:0; left:0;
+    width:0;
+    border-left: 2px dashed var(--ink);
+    opacity:0.15;
+  }
+  .stamp{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    border: 1.5px solid var(--rust);
+    border-radius: 999px;
+    padding: 5px 12px;
+    transform: rotate(-4deg);
+    margin-bottom: 22px;
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    line-height: 1.06;
+    max-width: 9.5em;
+  }
+  .hero p.sub{
+    margin-top: 20px;
+    font-size: 1.08rem;
+    max-width: 34em;
+    color: #4A4038;
+  }
+  .field{margin-bottom: 22px;}
+  .field .k{font-family:'IBM Plex Mono', monospace; font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; opacity:0.65;}
+  .field .v{font-family:'Fraunces', serif; font-size:1.15rem; margin-top:3px;}
+  .barcode{
+    height: 46px;
+    background: repeating-linear-gradient(90deg, var(--text-light) 0 2px, transparent 2px 5px, var(--text-light) 5px 7px, transparent 7px 11px, var(--text-light) 11px 14px, transparent 14px 17px);
+    opacity:0.85;
+    margin-top: 6px;
+  }
+  .cta-row{margin-top: 34px; display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    background: var(--rust);
+    color: var(--text-light);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    border-radius: 8px;
+    text-decoration:none;
+    border: none;
+    cursor:pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 10px 24px -10px rgba(124,52,40,0.7);
+  }
+  .btn:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px -10px rgba(124,52,40,0.85); }
+  .btn:focus-visible{ outline: 3px solid var(--brass); outline-offset: 3px; }
+  .microcopy{font-size:0.82rem; color:#6B5F52;}
+
+  @media (max-width: 640px){
+    .pass{grid-template-columns: 1fr;}
+    .pass::before,.pass::after{display:none;}
+    .pass-stub{width:auto; border-left:none; border-top: 2px dashed var(--brass);}
+  }
+
+  /* ---------- DOR ---------- */
+  .pain{background: var(--ink);}
+  .pain h2{font-size: clamp(1.6rem,3.4vw,2.2rem); max-width: 14em; margin-bottom: 40px;}
+  .pain-list{display:grid; gap: 1px; background: var(--line); border-radius: 14px; overflow:hidden; border:1px solid var(--line);}
+  .pain-item{
+    background: var(--teal);
+    padding: 26px 28px;
+    display:grid; grid-template-columns: 44px 1fr; gap: 18px; align-items:start;
+  }
+  .pain-item .num{font-family:'IBM Plex Mono', monospace; color: var(--brass); font-size:0.85rem; padding-top:4px;}
+  .pain-item p{font-size: 1.05rem; color: var(--text-light);}
+
+  /* ---------- SOLUÇÃO ---------- */
+  .solution{background: var(--paper);}
+  .solution .grid{display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:center;}
+  @media (max-width: 720px){ .solution .grid{grid-template-columns:1fr;} }
+  .solution h2{color: var(--text-dark); font-size: clamp(1.6rem,3.4vw,2.2rem); margin-bottom:18px;}
+  .solution p{color:#4A4038; max-width: 32em; margin-bottom: 16px;}
+  .ledger{
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 14px;
+    padding: 26px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.86rem;
+    box-shadow: 0 30px 60px -25px rgba(0,0,0,0.5);
+  }
+  .ledger .row{display:flex; justify-content:space-between; padding: 10px 0; border-bottom: 1px solid rgba(241,232,214,0.12);}
+  .ledger .row.total{border-bottom:none; padding-top:16px; color: var(--brass); font-weight:600;}
+  .ledger .tag{font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color: var(--brass); margin-bottom:14px; display:block;}
+
+  /* ---------- PROVA SOCIAL ---------- */
+  .proof{background: var(--ink);}
+  .proof h2{font-size: clamp(1.6rem,3.4vw,2.2rem); margin-bottom:36px; max-width:16em;}
+  .proof-grid{display:grid; grid-template-columns: repeat(3,1fr); gap: 20px;}
+  @media (max-width:720px){ .proof-grid{grid-template-columns:1fr;} }
+  .chat-card{
+    background: var(--paper);
+    color: var(--text-dark);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .chat-bubble{
+    background: #DDEBD8;
+    border-radius: 12px 12px 12px 2px;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+  }
+  .chat-meta{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#7A6E5E; text-align:right;}
+
+  /* ---------- OFERTA ---------- */
+  .offer{background: var(--teal);}
+  .offer-card{
+    background: var(--paper);
+    color: var(--text-dark);
+    border-radius: 18px;
+    padding: 44px;
+    text-align:center;
+    max-width: 520px;
+    margin: 0 auto;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.5);
+  }
+  .offer-card .eyebrow{color:var(--rust);}
+  .price-row{margin: 26px 0;}
+  .price-old{font-family:'IBM Plex Mono', monospace; text-decoration: line-through; color:#8A7C69; font-size:1.1rem;}
+  .price-new{font-family:'Fraunces', serif; font-size: 3rem; color: var(--rust); font-weight:700;}
+  .price-new sup{font-size:1.2rem; top:-1.2em;}
+  .offer-list{text-align:left; margin: 22px 0 30px; display:grid; gap:10px;}
+  .offer-list li{list-style:none; display:flex; gap:10px; font-size:0.96rem; color:#4A4038;}
+  .offer-list li::before{content:"✓"; color: var(--brass); font-weight:700;}
+
+  /* ---------- FOOTER CTA ---------- */
+  .final{background: var(--ink); text-align:center;}
+  .final h2{font-size: clamp(1.7rem,4vw,2.4rem); max-width: 16em; margin: 0 auto 14px;}
+  .final p{color:#B9AF9E; max-width: 30em; margin: 0 auto 30px;}
+  footer{padding: 30px 0; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:#6B7680;}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; scroll-behavior:auto !important;} }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="pass">
+      <div class="pass-main">
+        <span class="stamp">Passagem só de ida · sem dívida</span>
+        <h1>O primeiro passo pra viajar sem culpa e sem dívida.</h1>
+        <p class="sub">A planilha financeira que te ajuda a organizar suas contas e realizar as viagens que você sempre sonhou.</p>
+        <div class="cta-row">
+          <a href="https://sun.eduzz.com/E05NJBDG9X" class="btn">Quero organizar minhas finanças agora</a>
+          <span class="microcopy">Acesso imediato · em português · sem mensalidade</span>
+        </div>
+      </div>
+      <div class="pass-stub">
+        <div>
+          <div class="field">
+            <div class="k">Origem</div>
+            <div class="v">Boleto</div>
+          </div>
+          <div class="field">
+            <div class="k">Destino</div>
+            <div class="v">Liberdade</div>
+          </div>
+          <div class="field">
+            <div class="k">Partida</div>
+            <div class="v">Hoje</div>
+          </div>
+        </div>
+        <div class="barcode"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pain">
+  <div class="wrap">
+    <span class="eyebrow">Reconhece isso?</span>
+    <h2>Todo mês a mesma sensação de correr e não sair do lugar.</h2>
+    <div class="pain-list">
+      <div class="pain-item">
+        <span class="num">01</span>
+        <p>Você trabalha o mês inteiro e não sabe pra onde o dinheiro foi.</p>
+      </div>
+      <div class="pain-item">
+        <span class="num">02</span>
+        <p>Você adia suas viagens e seus sonhos porque sempre falta dinheiro no fim do mês.</p>
+      </div>
+      <div class="pain-item">
+        <span class="num">03</span>
+        <p>Você sente culpa toda vez que pensa em gastar com você mesmo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="solution">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="eyebrow" style="color:#8A6B2E">A virada</span>
+        <h2>Sua vida financeira organizada em uma tela só.</h2>
+        <p>A planilha mostra exatamente pra onde seu dinheiro está indo, separa o que é essencial do que é supérfluo, e reserva um espaço só pra aquele objetivo que você vem adiando — a viagem, a reforma, a folga na consciência.</p>
+        <p>Sem fórmulas complicadas. Você preenche, ela organiza.</p>
+      </div>
+      <div class="ledger">
+        <span class="tag">Resumo do mês</span>
+        <div class="row"><span>Moradia + contas</span><span>R$ 1.840</span></div>
+        <div class="row"><span>Alimentação</span><span>R$ 620</span></div>
+        <div class="row"><span>Assinaturas</span><span>R$ 95</span></div>
+        <div class="row total"><span>Reserva · viagem</span><span>R$ 310</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <span class="eyebrow">Quem já está usando</span>
+    <h2>Primeiras experiências de quem testou a planilha.</h2>
+    <div class="proof-grid">
+      <div class="chat-card">
+        <div class="chat-bubble">Nunca tinha visto tudo tão claro. Em uma semana já sabia onde cortar.</div>
+        <div class="chat-meta">— Mariana A.</div>
+
+      </div>
+      <div class="chat-card">
+        <div class="chat-bubble">Comecei a guardar pra viagem sem sentir culpa nenhuma.</div>
+        <div class="chat-meta">— Lucas F.</div>
+      </div>
+      <div class="chat-card">
+        <div class="chat-bubble">É simples de mexer, dá pra usar do celular mesmo.</div>
+        <div class="chat-meta">— Camila R.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="oferta">
+  <div class="wrap">
+    <div class="offer-card">
+      <span class="eyebrow">Oferta de lançamento</span>
+      <h2 style="margin-top:14px;">Comece hoje, sem esperar o próximo mês.</h2>
+      <div class="price-row">
+        <div class="price-old">de R$ 59,90</div>
+        <div class="price-new"><sup>R$</sup>37<span style="font-size:1.6rem;">,90</span></div>
+      </div>
+      <ul class="offer-list">
+        <li>Planilha completa, pronta pra usar</li>
+        <li>Acesso imediato após a compra</li>
+        <li>Sem mensalidade, é sua pra sempre</li>
+        <li>Passo a passo simples de preenchimento</li>
+      </ul>
+      <a href="https://sun.eduzz.com/E05NJBDG9X" class="btn" style="width:100%;">Quero começar minha jornada sem dívidas</a>
+      <p class="microcopy" style="margin-top:14px; font-style:italic;">Cada real organizado é um passo mais perto da sua próxima viagem.</p>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Sua próxima viagem começa numa planilha, não num empréstimo.</h2>
+    <p>Organize suas contas hoje e comece a guardar pro que realmente importa.</p>
+    <a href="https://sun.eduzz.com/E05NJBDG9X" class="btn">Quero organizar minhas finanças agora</a>
+  </div>
+</section>
+
+<footer>planilha financeira · feito para quem quer viver, não só pagar contas</footer>
+
+</body>
+</html>
