@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planilha Financeira Grátis — Primeiro Passo Sem Dívida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0F1A20;
+    --teal: #163542;
+    --paper: #F1E8D6;
+    --brass: #B4903F;
+    --rust: #7C3428;
+    --text-dark: #1C1712;
+    --text-light: #F1E8D6;
+    --line: rgba(180,144,63,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background: var(--ink);
+    color: var(--text-light);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    display:flex;
+    align-items:center;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width: 480px; margin: 0 auto; padding: 40px 24px; width:100%;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+    display:block;
+    margin-bottom: 16px;
+  }
+  h1{font-size: clamp(1.7rem, 5vw, 2.3rem); line-height:1.15; margin-bottom:16px;}
+  .sub{color:#B9AF9E; font-size:1rem; margin-bottom:28px;}
+  .card{
+    background: var(--paper);
+    color: var(--text-dark);
+    border-radius: 16px;
+    padding: 30px 26px;
+    box-shadow: 0 30px 60px -25px rgba(0,0,0,0.5);
+  }
+  .bullets{list-style:none; margin-bottom:24px;}
+  .bullets li{
+    display:flex; gap:10px; align-items:flex-start;
+    font-size:0.94rem; color:#4A4038; margin-bottom:10px;
+  }
+  .bullets li::before{content:"✓"; color:var(--rust); font-weight:700;}
+  form{display:grid; gap:12px;}
+  input{
+    width:100%;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(28,23,18,0.18);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size: 0.96rem;
+    background: #fff;
+    color: var(--text-dark);
+  }
+  input:focus-visible{ outline: 3px solid var(--brass); outline-offset: 1px; }
+  .btn{
+    display:block;
+    width:100%;
+    background: var(--rust);
+    color: var(--text-light);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 16px;
+    border-radius: 8px;
+    text-decoration:none;
+    border: none;
+    cursor:pointer;
+    text-align:center;
+    transition: transform 0.15s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn:disabled{opacity:0.6; cursor:default; transform:none;}
+  .microcopy{font-size:0.78rem; color:#6B5F52; text-align:center; margin-top:12px;}
+  .success{display:none; text-align:center;}
+  .success .check{font-size:2.4rem; margin-bottom:10px;}
+  .success h2{font-size:1.35rem; color:var(--text-dark); margin-bottom:10px;}
+  .success p{color:#4A4038; font-size:0.96rem; margin-bottom:24px;}
+  .error-msg{display:none; color:var(--rust); font-size:0.85rem; margin-top:-4px;}
+  footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#5A6570;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <span class="eyebrow">Planilha grátis · leva 2 minutos</span>
+  <h1>Descubra pra onde seu dinheiro está indo — antes de planejar sua próxima viagem.</h1>
+  <p class="sub">Deixe seu e-mail e receba agora uma planilha simples e gratuita pra organizar seus primeiros gastos.</p>
+
+  <div class="card">
+    <ul class="bullets">
+      <li>Modelo pronto, só preencher</li>
+      <li>Funciona em qualquer celular ou computador</li>
+      <li>Primeiro passo antes da planilha completa</li>
+    </ul>
+
+    <form id="captureForm">
+      <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+      <input type="email" id="email" name="email" placeholder="Seu melhor e-mail" required>
+      <span class="error-msg" id="errorMsg">Não conseguimos enviar agora. Tenta de novo em instantes.</span>
+      <button type="submit" class="btn" id="submitBtn">Quero minha planilha grátis</button>
+    </form>
+    <p class="microcopy" id="microcopy">Sem spam. Só a planilha e mais nada.</p>
+
+    <div class="success" id="successBox">
+      <div class="check">📩</div>
+      <h2>Prontinho, sua planilha está a caminho!</h2>
+      <p>Ela chega no e-mail que você cadastrou em alguns minutinhos. Enquanto isso, dá uma olhada na versão completa:</p>
+      <a href="AGGRESSIVE_PAGE_URL" class="btn">Conhecer a planilha completa</a>
+    </div>
+  </div>
+
+  <footer>planilha financeira · organize antes de viajar</footer>
+</div>
+
+<script>
+  // ATENÇÃO WESLEY: troque os dois valores abaixo antes de publicar:
+  // 1) FORM_ENDPOINT: crie uma conta grátis em https://formspree.io, crie um formulário,
+  //    copie o endpoint (algo como "https://formspree.io/f/xxxxxxx") e cole abaixo.
+  // 2) AGGRESSIVE_PAGE_URL: o link da página de vendas agressiva depois de publicada.
+  const FORM_ENDPOINT = "https://formspree.io/f/xeaqqjlw";
+  const AGGRESSIVE_PAGE_URL_VALUE = "https://wesleyoliveira070107-lang.github.io/vendas-agressiva.html";
+
+  document.querySelectorAll('a[href="AGGRESSIVE_PAGE_URL"]').forEach(a => a.href = AGGRESSIVE_PAGE_URL_VALUE);
+
+  const form = document.getElementById('captureForm');
+  const btn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const card = document.querySelector('.card');
+  const successBox = document.getElementById('successBox');
+  const microcopy = document.getElementById('microcopy');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorMsg.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        microcopy.style.display = 'none';
+        successBox.style.display = 'block';
+      } else {
+        throw new Error('Falha no envio');
+      }
+    } catch (err) {
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Quero minha planilha grátis';
+    }
+  });
+</script>
+
+</body>
+</html>
